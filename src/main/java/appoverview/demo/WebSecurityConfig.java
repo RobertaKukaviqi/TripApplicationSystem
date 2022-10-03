@@ -25,6 +25,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     ;
   }
 
+  @Bean
+  public static PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(12);
+  }
+  
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf()
