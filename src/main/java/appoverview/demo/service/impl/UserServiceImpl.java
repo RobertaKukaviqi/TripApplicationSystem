@@ -18,11 +18,16 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
   @Autowired
+  private PasswordEncoder encoder;
+  
+  @Autowired
   UserRepository userRepository;
 
   @Override
   public void saveUser(UserRegistrationDTO userRegistrationDTO) {
-    userRepository.save(userRegistrationDTO.convertDTOtoUser(userRegistrationDTO));
+    User user = userRegistrationDTO.convertDTOtoUser(userRegistrationDTO);
+    user.setPassword(encoder.encode(userRegistrationDTO.getPassword()));
+    userRepository.save(user);
   }
 
   @Override
